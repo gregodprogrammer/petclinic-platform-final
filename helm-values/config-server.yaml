@@ -1,0 +1,16 @@
+nameOverride: config-server
+
+image:
+  repository: localhost:5001/config-server
+
+service:
+  port: 8888
+  targetPort: 8888
+
+env:
+  - name: SPRING_PROFILES_ACTIVE
+    value: native
+  - name: SERVER_PORT
+    value: "8888"
+  - name: JAVA_OPTS
+    value: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=65.0"

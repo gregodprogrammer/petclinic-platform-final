@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  pullPolicy: IfNotPresent
+
+livenessProbe:
+  initialDelaySeconds: 180
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 512Mi
+  limits:
+    cpu: 500m
+    memory: 768Mi
