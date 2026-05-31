@@ -12,6 +12,10 @@ env:
     value: docker
   - name: SERVER_PORT
     value: "9090"
+  - name: SPRING_CLOUD_CONFIG_URI
+    value: "http://config-server:8888"
+  - name: SPRING_APPLICATION_JSON
+    value: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://discovery-server:8761/eureka/"}}}}'
 
 initContainers:
   - name: wait-for-config-server
