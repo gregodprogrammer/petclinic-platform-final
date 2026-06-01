@@ -14,3 +14,5 @@ env:
     value: "8888"
   - name: JAVA_OPTS
     value: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=65.0"
+  - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+    value: "true"

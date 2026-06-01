@@ -12,9 +12,17 @@ env:
     value: docker
   - name: SERVER_PORT
     value: "8761"
+  - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+    value: "true"
 
 livenessProbe:
-  initialDelaySeconds: 120
+  httpGet:
+    path: /actuator/health
+    port: 8761
+  initialDelaySeconds: 200
+  periodSeconds: 15
+  failureThreshold: 3
+  timeoutSeconds: 3
 
 initContainers:
   - name: wait-for-config-server

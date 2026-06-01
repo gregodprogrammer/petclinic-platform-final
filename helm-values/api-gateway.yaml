@@ -16,6 +16,19 @@ env:
     value: "http://config-server:8888"
   - name: SPRING_APPLICATION_JSON
     value: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://discovery-server:8761/eureka/"}}}}'
+  - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+    value: "http://zipkin:9411/api/v2/spans"
+  - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+    value: "true"
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8080
+  initialDelaySeconds: 240
+  periodSeconds: 15
+  failureThreshold: 3
+  timeoutSeconds: 3
 
 initContainers:
   - name: wait-for-config-server

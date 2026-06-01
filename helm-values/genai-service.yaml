@@ -17,6 +17,8 @@ env:
   - name: SPRING_APPLICATION_JSON
     value: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://discovery-server:8761/eureka/"}}}}'
 
+  - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+    value: "true"
 livenessProbe:
   initialDelaySeconds: 300
 

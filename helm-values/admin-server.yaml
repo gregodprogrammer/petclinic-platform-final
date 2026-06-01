@@ -16,6 +16,17 @@ env:
     value: "http://config-server:8888"
   - name: SPRING_APPLICATION_JSON
     value: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://discovery-server:8761/eureka/"}}}}'
+  - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+    value: "true"
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 9090
+  initialDelaySeconds: 200
+  periodSeconds: 15
+  failureThreshold: 3
+  timeoutSeconds: 3
 
 initContainers:
   - name: wait-for-config-server
