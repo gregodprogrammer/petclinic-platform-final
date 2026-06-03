@@ -62,3 +62,32 @@ Key ones:
 - Eureka hostname vs IP → EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
 - Zipkin at localhost:9411 → deployed zipkin to petclinic-dev namespace
 - Windows cant reach WSL2 MetalLB IP → kubectl port-forward on 0.0.0.0
+
+## Prompt 12 — Prometheus + Grafana + AlertManager ✅
+- Deployed kube-prometheus-stack via Helm
+- Grafana accessible at http://localhost:3300
+- Grafana credentials: admin / petclinic-grafana
+- Grafana service: svc/grafana in monitoring namespace
+- Prometheus scraping petclinic-dev services
+- Pre-built Kubernetes dashboards loaded
+- Live cluster metrics confirmed working
+- Challenges: PVC deadlock, Helm stuck state, Grafana plugin downloads fixed
+
+## Challenges Logged
+- WaitForFirstConsumer PVC deadlock on StatefulSets
+- Helm release stuck in pending-upgrade state
+- Grafana crashing due to grafana.com plugin downloads (no internet in kind)
+- Fixed by disabling plugin downloads in grafana.ini
+
+## Prompt 12 — Prometheus + Grafana + AlertManager ✅ COMPLETE
+- Helm chart: kube-prometheus-stack deployed in monitoring namespace
+- Grafana: http://localhost:3300 (admin / petclinic-grafana)
+- Grafana service name: svc/grafana in monitoring namespace
+- Prometheus scraping petclinic-dev pods
+- Live Kubernetes cluster dashboards confirmed working
+- prometheus-values.yaml committed to GitHub
+- Working directory: ~/petclinic-platform-final (all future work here)
+- Challenges fixed:
+  - PVC WaitForFirstConsumer deadlock
+  - Helm stuck in pending-upgrade state  
+  - Grafana crashing due to grafana.com plugin downloads
