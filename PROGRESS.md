@@ -7,22 +7,28 @@
 - namespace: petclinic-dev
 
 ## Completed Prompts
-- Prompt 1-11: All complete ✅
+- Prompt 1-12: All complete ✅
 - Prompt 12: Prometheus + Grafana + AlertManager ✅
   - Grafana: http://localhost:3300 (admin / petclinic-grafana)
   - Grafana service: svc/grafana -n monitoring
-  - Port forward: kubectl port-forward -n monitoring svc/grafana 3300:80 --address=0.0.0.0 &
 
 ## Prompt 13 Status: IN PROGRESS
-- metrics-server: CrashLoopBackOff (port 10250 conflict with hostNetwork)
-- Last error: bind: address already in use on port 10250
-- Last attempted fix: port 4443 deployment (not yet run)
+- metrics-server: CrashLoopBackOff - port 4443 fix NOT YET RUN
 - HPA manifests: NOT YET CREATED
+- CoreDNS: was broken, restarted and fixed
+- discovery-server: stuck in Init due to stale DNS, force deleted awaiting restart
 
-## Current Issues To Fix On Resume
-1. petclinic-dev pods showing Unknown - need force delete to recover
-2. metrics-server CrashLoopBackOff - fix with port 4443
-3. Then create HPA for all 6 services
+## Current Pod Status (petclinic-dev)
+- admin-server: 1/1 Running ✅
+- api-gateway: 1/1 Running ✅
+- config-server: 1/1 Running ✅
+- customers-service: 1/1 Running ✅
+- discovery-server: Init:0/1 (being fixed) ⚠️
+- genai-service: 0/1 Running ⚠️
+- mysql: 1/1 Running ✅
+- vets-service: 1/1 Running ✅
+- visits-service: 1/1 Running ✅
+- zipkin: 1/1 Running ✅
 
 ## Startup Commands (run every session)
 pkill -f "port-forward" 2>/dev/null
@@ -36,7 +42,6 @@ kubectl port-forward -n monitoring svc/grafana 3300:80 --address=0.0.0.0 &
 - MetalLB pool: 172.18.255.200-250
 - NGINX Ingress External-IP: 172.18.255.200
 - TLS certs: ~/petclinic-capstone/k8s/tls/
-- LocalStack: port 4566
 - kind cluster name: petclinic
 
 ## Windows hosts file entries
@@ -49,5 +54,5 @@ kubectl port-forward -n monitoring svc/grafana 3300:80 --address=0.0.0.0 &
 
 ## Screenshot Naming Convention
 p{prompt}-{sequence}-{description}.png
-Last screenshot: p12-16-progress-md-updated.png
-Next screenshot: p13-01-...
+Last screenshot: p13-02
+Next screenshot: p13-03
