@@ -85,3 +85,45 @@ Next screenshot: p13-03
 - Large file writes: use python3 write_text not heredoc (WSL2 terminal paste corruption)
 
 ## Next: Prompt 14 — ArgoCD + app-of-apps + badge
+
+## Session End — 9 June 2026
+
+### Cluster Status
+- kube-proxy: was fixed, may have crashed again after reboot
+- inotify limits: reset on reboot — must reapply every WSL2 restart
+- metrics-server: was working, 8 restarts
+- HPA: all 8 HPAs created, auto-scaling verified
+- App: 503/502 on https://petclinic.local:8443 — pods warming up
+
+### On Resume — Run These First
+1. sudo sysctl -p /etc/sysctl.d/99-petclinic.conf
+2. docker exec petclinic-control-plane sysctl -w fs.inotify.max_user_instances=8192
+3. kubectl get pods -n kube-system | grep kube-proxy
+4. kubectl scale deployment api-gateway customers-service vets-service visits-service admin-server genai-service -n petclinic-dev --replicas=1
+5. kubectl port-forward -n ingress-nginx svc/ingress-nginx-controller 8443:443 --address=0.0.0.0 &
+
+### DMI Submission Documents (already generated)
+- DMI_Cohort2_Greg_COPYREADY.docx — main submission document
+- DMI_Posts_Greg.docx — all 4 LinkedIn and blog posts
+- Both in /mnt/user-data/outputs/ — download before closing this chat
+
+### Screenshots Still Needed
+- B2-S3: docker compose ps
+- B2-S4a: localhost:8080 homepage
+- B2-S4b: localhost:8761 Eureka
+- B2-S4c: localhost:9090 Spring Boot Admin
+- B2-S4f: localhost:3030 Grafana
+- B2-S5a: Find Owners list
+- B2-S5b: Owner detail + pets
+- B2-S5c: Add Visit submitted
+- B2-S5d: Veterinarians list
+- B2-S7: docker compose down output
+
+### Next Prompt on Resume
+- Fix kube-proxy if crashed
+- Scale down all deployments to 1 replica
+- Get petclinic.local:8443 working
+- Take the 9 missing screenshots
+- Submit DMI document
+
+## Next Capstone Prompt: Prompt 14 — ArgoCD
