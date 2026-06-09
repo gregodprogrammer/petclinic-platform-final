@@ -56,3 +56,32 @@ kubectl port-forward -n monitoring svc/grafana 3300:80 --address=0.0.0.0 &
 p{prompt}-{sequence}-{description}.png
 Last screenshot: p13-02
 Next screenshot: p13-03
+
+## Prompt 13 — metrics-server + HPA Autoscaling — COMPLETE
+
+### What was done
+- Diagnosed root cause of ALL cluster instability: WSL2 fs.inotify.max_user_instances=128 (too low)
+- Fixed inotify limits on WSL2 host and kind node (8192 instances, 524288 watches)
+- Persisted fix to /etc/sysctl.d/99-petclinic.conf
+- Fixed kube-proxy CrashLoopBackOff (was failing with "too many open files")
+- metrics-server recovered once kube-proxy restored iptables routing
+- Created k8s/hpa/hpa-all-services.yaml with HPA for all 8 services
+- Verified kubectl top nodes and kubectl top pods working
+- HPA auto-scaled without load test: api-gateway/customers/vets/visits all hit maxReplicas
+- Git committed and pushed: 7e4c65a
+
+### Screenshots
+- p13-05: kubectl top nodes + kubectl top pods showing real metrics
+- p13-06: kubectl get hpa showing real CPU%/memory% targets with replicas scaled
+- p13-07: All pods running with multiple replicas + HPA status
+
+### Key facts
+- inotify fix: fs.inotify.max_user_instances=8192, max_user_watches=524288
+- metrics-server image: registry.k8s.io/metrics-server/metrics-server:v0.7.2
+- metrics-server port: 4443, hostNetwork: true
+- HPA file: k8s/hpa/hpa-all-services.yaml
+- vets-service memory running at 121%/75% threshold — needs limit increase (documented)
+- genai-service: 1/1 Running, init containers wait for config+discovery servers
+- Large file writes: use python3 write_text not heredoc (WSL2 terminal paste corruption)
+
+## Next: Prompt 14 — ArgoCD + app-of-apps + badge
